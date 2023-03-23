@@ -42,11 +42,11 @@ public class VideoDao {
         }
     }
     
-    public List<Video> getVideosByAuthor(String currentUser) throws SQLException{
+    public List<Video> getVideosByAuthor(String author) throws SQLException{
         String query = "SELECT * FROM VIDEOS WHERE author = ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(query);){
             List<Video> videos = new ArrayList<>();
-            preparedStatement.setString(1, currentUser);
+            preparedStatement.setString(1, author);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
@@ -55,13 +55,11 @@ public class VideoDao {
                 int reproductions = resultSet.getInt("reproductions");
                 String description = resultSet.getString("description");
                 String url = resultSet.getString("url");
-                Video video = new Video(title, currentUser, creationDate, duration, reproductions, description, url, false);
+                Video video = new Video(title, author, creationDate, duration, reproductions, description, url, false);
                 videos.add(video);
             }
             return videos;
-        } catch (Exception e){
-            return null;
-        }
+        } 
     }
     
     public List<Video> getVideos() throws SQLException{
@@ -81,8 +79,46 @@ public class VideoDao {
                 videos.add(video);
             }
             return videos;
-        } catch (Exception e){
-            return null;
-        }
+        } 
+    }
+    
+    public List<Video> getVideosByTitle(String titleInput)throws SQLException{
+        String query = "SELECT * FROM VIDEOS WHERE author = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(query);){
+            List<Video> videos = new ArrayList<>();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                String author = resultSet.getString("author");
+                Date creationDate = resultSet.getDate("creation_date");
+                Time duration = resultSet.getTime("duration");
+                int reproductions = resultSet.getInt("reproductions");
+                String description = resultSet.getString("description");
+                String url = resultSet.getString("url");
+                Video video = new Video(title, author, creationDate, duration, reproductions, description, url, false);
+                videos.add(video);
+            }
+            return videos;
+        } 
+    }
+    
+    public List<Video> getVideosByCreationDate(Date startDate, Date endDate)throws SQLException{
+        String query = "SELECT * FROM VIDEOS WHERE author = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(query);){
+            List<Video> videos = new ArrayList<>();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                String author = resultSet.getString("author");
+                Date creationDate = resultSet.getDate("creation_date");
+                Time duration = resultSet.getTime("duration");
+                int reproductions = resultSet.getInt("reproductions");
+                String description = resultSet.getString("description");
+                String url = resultSet.getString("url");
+                Video video = new Video(title, author, creationDate, duration, reproductions, description, url, false);
+                videos.add(video);
+            }
+            return videos;
+        } 
     }
 }
