@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,24 +30,11 @@ public class VideoDao {
         }
     }
     
-    public void addVideo(Video video) throws SQLException{
-        String query = "INSERT INTO videos (title, author, creation_date, duration, description, url) VALUES (?, ?, ?, ?, ?, ?)";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(query);){
-            preparedStatement.setString(1, video.getTitle());
-            preparedStatement.setString(2, video.getAuthor());
-            preparedStatement.setDate(3, new Date(System.currentTimeMillis()));
-            preparedStatement.setTime(4, video.getDuration());
-            preparedStatement.setString(5, video.getDescription());
-            preparedStatement.setString(6, video.getUrl());
-            preparedStatement.executeUpdate();
-        }
-    }
-    
     public List<Video> getVideosByAuthor(String author) throws SQLException{
-        String query = "SELECT * FROM VIDEOS WHERE author = ?";
+        String query = "SELECT * FROM VIDEOS WHERE author LIKE ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(query);){
             List<Video> videos = new ArrayList<>();
-            preparedStatement.setString(1, author);
+            preparedStatement.setString(1, String.format("%%%s%%",author));
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
@@ -83,9 +71,10 @@ public class VideoDao {
     }
     
     public List<Video> getVideosByTitle(String titleInput)throws SQLException{
-        String query = "SELECT * FROM VIDEOS WHERE author = ?";
+        String query = "SELECT * FROM VIDEOS WHERE title LIKE ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(query);){
             List<Video> videos = new ArrayList<>();
+            preparedStatement.setString(1, String.format("%%%s%%", titleInput));
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
@@ -103,9 +92,12 @@ public class VideoDao {
     }
     
     public List<Video> getVideosByCreationDate(Date startDate, Date endDate)throws SQLException{
-        String query = "SELECT * FROM VIDEOS WHERE author = ?";
+        String query = "SELECT * FROM VIDEOS WHERE creation_date BETWEEN ? AND ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(query);){
             List<Video> videos = new ArrayList<>();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            preparedStatement.setString(1, formatter.format(startDate));
+            preparedStatement.setString(1, formatter.format(endDate));
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
