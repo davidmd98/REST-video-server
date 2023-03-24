@@ -1,7 +1,9 @@
 package isdcm.restapp.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import isdcm.restapp.daos.VideoDao;
 import isdcm.restapp.models.Video;
+import isdcm.restapp.utils.Json;
 import java.sql.SQLException;
 import java.util.List;
 import java.sql.Date;
@@ -18,25 +20,28 @@ public class VideoService {
         this.videoDao = new VideoDao();
     }
     
-    public List<Video> searchByTitle(String title) throws SQLException{
+    public String searchByTitle(String title) throws SQLException, JsonProcessingException{
         try{
-            return videoDao.getVideosByTitle(title);
+            List<Video> videoList = videoDao.getVideosByTitle(title);
+            return Json.convertToJson(videoList);
         } catch(Exception e){
             throw e;
         }
     }
     
-    public List<Video> searchByAuthor(String author) throws SQLException{
+    public String searchByAuthor(String author) throws SQLException, JsonProcessingException {
         try{
-            return videoDao.getVideosByAuthor(author);
+            List<Video> videoList = videoDao.getVideosByAuthor(author);
+            return Json.convertToJson(videoList);
         } catch(Exception e){
             throw e;
         }
     }
     
-    public List<Video> searchByCreationDate(Date startDate, Date endDate) throws SQLException{
+    public String searchByCreationDate(Date startDate, Date endDate) throws SQLException, JsonProcessingException{
         try{
-            return videoDao.getVideosByCreationDate(startDate, endDate);
+            List<Video> videoList = videoDao.getVideosByCreationDate(startDate, endDate);
+            return Json.convertToJson(videoList);
         } catch(Exception e){
             throw e;
         }
