@@ -6,7 +6,6 @@ import isdcm.restapp.models.Video;
 import isdcm.restapp.utils.Json;
 import java.sql.SQLException;
 import java.util.List;
-import java.sql.Date;
 
 /**
  *
@@ -38,7 +37,7 @@ public class VideoService {
         }
     }
     
-    public String searchByCreationDate(Date startDate, Date endDate) throws SQLException, JsonProcessingException{
+    public String searchByCreationDate(String startDate, String endDate) throws SQLException, JsonProcessingException{
         try{
             List<Video> videoList = videoDao.getVideosByCreationDate(startDate, endDate);
             return Json.convertToJson(videoList);

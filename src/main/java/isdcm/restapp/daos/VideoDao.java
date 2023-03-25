@@ -56,12 +56,11 @@ public class VideoDao {
         } 
     }
     
-    public List<Video> getVideosByCreationDate(Date startDate, Date endDate)throws SQLException{
+    public List<Video> getVideosByCreationDate(String start, String end)throws SQLException{
         String query = "SELECT * FROM VIDEOS WHERE creation_date BETWEEN ? AND ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(query);){
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            preparedStatement.setString(1, formatter.format(startDate));
-            preparedStatement.setString(1, formatter.format(endDate));
+            preparedStatement.setString(1, start);
+            preparedStatement.setString(2, end);
             ResultSet resultSet = preparedStatement.executeQuery();
             return getVideoList(resultSet);
         } 
@@ -71,7 +70,7 @@ public class VideoDao {
         while (resultSet.next()) {
             String title = resultSet.getString("title");
             String author = resultSet.getString("author");
-            Date creationDate = resultSet.getDate("creation_date");
+            String creationDate = resultSet.getDate("creation_date").toString();
             Time duration = resultSet.getTime("duration");
             int reproductions = resultSet.getInt("reproductions");
             String description = resultSet.getString("description");

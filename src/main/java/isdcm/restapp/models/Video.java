@@ -11,41 +11,20 @@ public class Video {
 
     private String title;
     private String author;
-    private Date creationDate;
+    private String creationDate;
     private Time duration;
     private int reproductions;
     private String description;
     private boolean isLocal;
     private String url;
 
-    public Video(String title, String author, Date creationDate, Time duration, String description, String url, boolean isLocal) {
-        this.title = title;
-        this.author = author;
-        this.creationDate = creationDate;
-        this.duration = duration;
-        this.reproductions = 0;
-        this.description = description;
-        this.url = url;
-        this.isLocal = isLocal;
-    }
     
-    public Video(String title, String author, Date creationDate, Time duration, int reproductions, String description, String url, boolean isLocal) {
+    public Video(String title, String author, String creationDate, Time duration, int reproductions, String description, String url, boolean isLocal) {
         this.title = title;
         this.author = author;
         this.creationDate = creationDate;
         this.duration = duration;
         this.reproductions = reproductions;
-        this.description = description;
-        this.url = url;
-        this.isLocal = isLocal;
-    }
-    
-    public Video(String title, String author, Time duration, String description, String url, boolean isLocal) {
-        this.title = title;
-        this.author = author;
-        this.creationDate = new Date(System.currentTimeMillis());
-        this.duration = duration;
-        this.reproductions = 0;
         this.description = description;
         this.url = url;
         this.isLocal = isLocal;
@@ -67,11 +46,11 @@ public class Video {
         this.author = author;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 

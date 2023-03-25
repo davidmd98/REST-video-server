@@ -7,7 +7,7 @@ package isdcm.restapp.resources;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import isdcm.restapp.services.VideoService;
-import java.sql.Date;
+import java.io.IOException;
 import java.sql.SQLException;
 import javax.jws.WebService;
 import javax.ws.rs.Consumes;
@@ -72,21 +72,46 @@ public class ServerREST {
     
      /**
      * POST method
-     * @param start
-     * @param end
+     * @param request
      * @return 
      */
     @Path("getByCreationDate")
     @POST   
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getVideosByCreationDate (@FormParam("start") Date start, Date end) 
-            throws SQLException, JsonProcessingException{
+    public Response getVideosByCreationDate (Period period) 
+            throws SQLException, JsonProcessingException, IOException{
+        System.out.println("getVideosByCreationDate called");
         try{
-            String json = videoService.searchByCreationDate(start, end);
+            String json = videoService.searchByCreationDate(period.getStart(), period.getEnd());
             return Response.ok(json).build();
         } catch(Exception e){
             throw e;
         }
     }
+    public static class Period {
+
+        private String start;
+        private String end;
+
+        public Period() {
+        }
+
+        public String getStart() {
+            return start;
+        }
+
+        public void setStart(String start) {
+            this.start = start;
+        }
+
+        public String getEnd() {
+            return end;
+        }
+
+        public void setEnd(String end) {
+            this.end = end;
+        }
+    
+}
 }
