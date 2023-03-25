@@ -76,7 +76,7 @@ public class VideoDao {
             int reproductions = resultSet.getInt("reproductions");
             String description = resultSet.getString("description");
             String url = resultSet.getString("url");
-            boolean isLocal = resultSet.getBoolean("isLocal");
+            boolean isLocal = resultSet.getBoolean("is_local");
             Video video = new Video(title, author, creationDate, duration, reproductions, description, url, isLocal);
             videos.add(video);
         }

@@ -23,6 +23,7 @@ import javax.ws.rs.core.Response;
  * @author david
  */
 @WebService(serviceName = "ServerREST")
+@Path("ServerREST")
 public class ServerREST {
 
     private VideoService videoService;
