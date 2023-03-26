@@ -1,13 +1,14 @@
 package isdcm.restapp.resources;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import isdcm.restapp.models.Author;
 import isdcm.restapp.models.Period;
+import isdcm.restapp.models.Title;
 import isdcm.restapp.services.VideoService;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.jws.WebService;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -35,9 +36,9 @@ public class ServerREST {
      */
     @Path("getByTitle")
     @POST   
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getVideosByTitle (@FormParam("title") String title) 
+    public Response getVideosByTitle (Title title) 
             throws SQLException, JsonProcessingException{
         try{
             String json = videoService.searchByTitle(title);
@@ -54,9 +55,9 @@ public class ServerREST {
      */
     @Path("getByAuthor")
     @POST   
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getVideosByAuthor (@FormParam("author") String author) 
+    public Response getVideosByAuthor (Author author) 
             throws SQLException, JsonProcessingException{
         try{
             String json = videoService.searchByAuthor(author);
