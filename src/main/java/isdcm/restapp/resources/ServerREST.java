@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package isdcm.restapp.resources;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import isdcm.restapp.models.Period;
 import isdcm.restapp.services.VideoService;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -83,35 +79,10 @@ public class ServerREST {
             throws SQLException, JsonProcessingException, IOException{
         System.out.println("getVideosByCreationDate called");
         try{
-            String json = videoService.searchByCreationDate(period.getStart(), period.getEnd());
+            String json = videoService.searchByCreationDate(period);
             return Response.ok(json).build();
         } catch(Exception e){
             throw e;
         }
     }
-    public static class Period {
-
-        private String start;
-        private String end;
-
-        public Period() {
-        }
-
-        public String getStart() {
-            return start;
-        }
-
-        public void setStart(String start) {
-            this.start = start;
-        }
-
-        public String getEnd() {
-            return end;
-        }
-
-        public void setEnd(String end) {
-            this.end = end;
-        }
-    
-}
 }

@@ -2,8 +2,10 @@ package isdcm.restapp.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import isdcm.restapp.daos.VideoDao;
+import isdcm.restapp.models.Period;
 import isdcm.restapp.models.Video;
 import isdcm.restapp.utils.Json;
+import isdcm.restapp.validators.PeriodValidator;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -37,9 +39,10 @@ public class VideoService {
         }
     }
     
-    public String searchByCreationDate(String startDate, String endDate) throws SQLException, JsonProcessingException{
+    public String searchByCreationDate(Period period) throws SQLException, JsonProcessingException{
         try{
-            List<Video> videoList = videoDao.getVideosByCreationDate(startDate, endDate);
+            PeriodValidator.validatePeriod(period);
+            List<Video> videoList = videoDao.getVideosByCreationDate(period.getStart(), period.getEnd());
             return Json.convertToJson(videoList);
         } catch(Exception e){
             throw e;
