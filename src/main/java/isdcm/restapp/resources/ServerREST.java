@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import isdcm.restapp.models.Author;
 import isdcm.restapp.models.Period;
 import isdcm.restapp.models.Title;
+import isdcm.restapp.models.Video;
 import isdcm.restapp.services.VideoService;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -78,10 +79,29 @@ public class ServerREST {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVideosByCreationDate (Period period) 
             throws SQLException, JsonProcessingException, IOException{
-        System.out.println("getVideosByCreationDate called");
         try{
             String json = videoService.searchByCreationDate(period);
             return Response.ok(json).build();
+        } catch(Exception e){
+            throw e;
+        }
+    }
+    
+     /**
+     * POST method
+     * @param request
+     * @return 
+     */
+    @Path("updateViews")
+    @POST   
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateViews (Video video) 
+            throws SQLException, JsonProcessingException, IOException{
+        System.out.println("getVideosByCreationDate called");
+        try{
+            videoService.updateViews(video);
+            return Response.ok().build();
         } catch(Exception e){
             throw e;
         }

@@ -10,6 +10,7 @@ import isdcm.restapp.utils.Json;
 import isdcm.restapp.validators.AuthorValidator;
 import isdcm.restapp.validators.PeriodValidator;
 import isdcm.restapp.validators.TitleValidator;
+import isdcm.restapp.validators.VideoValidator;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -51,6 +52,15 @@ public class VideoService {
             PeriodValidator.validatePeriod(period);
             List<Video> videoList = videoDao.getVideosByCreationDate(period.getStart(), period.getEnd());
             return Json.convertToJson(videoList);
+        } catch(Exception e){
+            throw e;
+        }
+    }
+    
+    public void updateViews(Video video)throws SQLException{
+        try{
+            VideoValidator.validateVideo(video);
+            videoDao.updateViews(video.getId());
         } catch(Exception e){
             throw e;
         }

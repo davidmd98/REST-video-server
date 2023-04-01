@@ -1,35 +1,39 @@
 package isdcm.restapp.models;
 
-import java.sql.Date;
-import java.sql.Time;
-
 /**
  *
  * @author david
  */
 public class Video {
 
+    private int id;
     private String title;
     private String author;
     private String creationDate;
-    private Time duration;
     private int reproductions;
     private String description;
     private boolean isLocal;
     private String url;
-
     
-    public Video(String title, String author, String creationDate, Time duration, int reproductions, String description, String url, boolean isLocal) {
+    public Video(int id, String title, String author, String creationDate, int reproductions, String description, String url, boolean isLocal) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.creationDate = creationDate;
-        this.duration = duration;
         this.reproductions = reproductions;
         this.description = description;
         this.url = url;
         this.isLocal = isLocal;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getTitle() {
         return title;
     }
@@ -52,14 +56,6 @@ public class Video {
 
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
-    }
-
-    public Time getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Time duration) {
-        this.duration = duration;
     }
 
     public int getReproductions() {

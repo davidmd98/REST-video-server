@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,17 +65,25 @@ public class VideoDao {
     private List<Video> getVideoList(ResultSet resultSet)throws SQLException{
         List<Video> videos = new ArrayList<>();
         while (resultSet.next()) {
+            int id = resultSet.getInt("Id");
             String title = resultSet.getString("title");
             String author = resultSet.getString("author");
             String creationDate = resultSet.getDate("creation_date").toString();
-            Time duration = resultSet.getTime("duration");
             int reproductions = resultSet.getInt("reproductions");
             String description = resultSet.getString("description");
             String url = resultSet.getString("url");
             boolean isLocal = resultSet.getBoolean("is_local");
-            Video video = new Video(title, author, creationDate, duration, reproductions, description, url, isLocal);
+            Video video = new Video(id, title, author, creationDate, reproductions, description, url, isLocal);
             videos.add(video);
         }
         return videos;
+    }
+    
+    public void updateViews(int id)throws SQLException{
+        String query = "UPDATE reproductions = reproductions + 1 FROM VIDEOS WHERE id = ?";
+        
+        try(PreparedStatement preparedStatement = connection.prepareStatement(query);){
+            preparedStatement.setInt(1, id);
+        }
     }
 }
