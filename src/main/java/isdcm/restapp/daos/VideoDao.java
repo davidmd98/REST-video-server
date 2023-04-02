@@ -80,10 +80,32 @@ public class VideoDao {
     }
     
     public void updateViews(int id)throws SQLException{
-        String query = "UPDATE reproductions = reproductions + 1 FROM VIDEOS WHERE id = ?";
-        
+        String query = "UPDATE VIDEOS SET reproductions = reproductions + 1 WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        }
+    }
+    
+    public Video getById(int id) throws SQLException{
+        String query = "SELECT * FROM VIDEOS WHERE id = ? FETCH FIRST 1 ROWS ONLY";
         try(PreparedStatement preparedStatement = connection.prepareStatement(query);){
             preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+            String title = resultSet.getString("title");
+            String author = resultSet.getString("author");
+            String creationDate = resultSet.getDate("creation_date").toString();
+            int reproductions = resultSet.getInt("reproductions");
+            String description = resultSet.getString("description");
+            String url = resultSet.getString("url");
+            boolean isLocal = resultSet.getBoolean("is_local");
+            
+            return new Video(id, title, author, creationDate, reproductions, description, url, isLocal);
+        } else {
+            // handle case where result set is empty
+            return null;
+        }
         }
     }
 }

@@ -19,4 +19,13 @@ public class Json {
             throw e;
         }
     }
+    public static String convertToJson(Video input) throws JsonProcessingException{
+        try{
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(input);
+            return json;
+        } catch (Exception e){
+            throw e;
+        }
+    }
 }

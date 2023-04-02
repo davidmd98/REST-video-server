@@ -2,9 +2,9 @@ package isdcm.restapp.resources;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import isdcm.restapp.models.Author;
+import isdcm.restapp.models.Id;
 import isdcm.restapp.models.Period;
 import isdcm.restapp.models.Title;
-import isdcm.restapp.models.Video;
 import isdcm.restapp.services.VideoService;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -92,16 +92,16 @@ public class ServerREST {
      * @param request
      * @return 
      */
-    @Path("updateViews")
+    @Path("viewVideo")
     @POST   
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateViews (Video video) 
+    public Response updateViews (Id id) 
             throws SQLException, JsonProcessingException, IOException{
-        System.out.println("getVideosByCreationDate called");
+        
         try{
-            videoService.updateViews(video);
-            return Response.ok().build();
+            String json = videoService.updateViews(id);
+            return Response.ok(json).build();
         } catch(Exception e){
             throw e;
         }

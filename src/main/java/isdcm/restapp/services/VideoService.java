@@ -3,6 +3,7 @@ package isdcm.restapp.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import isdcm.restapp.daos.VideoDao;
 import isdcm.restapp.models.Author;
+import isdcm.restapp.models.Id;
 import isdcm.restapp.models.Period;
 import isdcm.restapp.models.Title;
 import isdcm.restapp.models.Video;
@@ -10,7 +11,6 @@ import isdcm.restapp.utils.Json;
 import isdcm.restapp.validators.AuthorValidator;
 import isdcm.restapp.validators.PeriodValidator;
 import isdcm.restapp.validators.TitleValidator;
-import isdcm.restapp.validators.VideoValidator;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -57,10 +57,10 @@ public class VideoService {
         }
     }
     
-    public void updateViews(Video video)throws SQLException{
+    public String updateViews(Id id) throws SQLException, JsonProcessingException{
         try{
-            VideoValidator.validateVideo(video);
-            videoDao.updateViews(video.getId());
+            videoDao.updateViews(id.getId());
+            return Json.convertToJson(videoDao.getById(id.getId()));
         } catch(Exception e){
             throw e;
         }
