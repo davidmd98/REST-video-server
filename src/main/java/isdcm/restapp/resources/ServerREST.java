@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import javax.jws.WebService;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -36,7 +36,7 @@ public class ServerREST {
      * @return
      */
     @Path("getByTitle")
-    @POST   
+    @PUT   
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVideosByTitle (Title title) 
@@ -55,7 +55,7 @@ public class ServerREST {
      * @return 
      */
     @Path("getByAuthor")
-    @POST   
+    @PUT   
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVideosByAuthor (Author author) 
@@ -74,7 +74,7 @@ public class ServerREST {
      * @return 
      */
     @Path("getByCreationDate")
-    @POST   
+    @PUT   
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVideosByCreationDate (Period period) 
@@ -93,7 +93,7 @@ public class ServerREST {
      * @return 
      */
     @Path("viewVideo")
-    @POST   
+    @PUT   
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateViews (Id id) 
