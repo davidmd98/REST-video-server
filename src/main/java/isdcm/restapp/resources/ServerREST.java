@@ -43,6 +43,7 @@ public class ServerREST {
             throws SQLException, JsonProcessingException{
         try{
             String json = videoService.searchByTitle(title);
+            System.out.println(json);
             return Response.ok(json).build();
         } catch(Exception e){
             throw e;
@@ -81,6 +82,7 @@ public class ServerREST {
             throws SQLException, JsonProcessingException, IOException{
         try{
             String json = videoService.searchByCreationDate(period);
+            System.out.println(json);
             return Response.ok(json).build();
         } catch(Exception e){
             throw e;
